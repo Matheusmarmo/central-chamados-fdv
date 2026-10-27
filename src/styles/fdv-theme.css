@@ -1,0 +1,352 @@
+/* =====================================================================
+   FDV — Central de Chamados de TI · Tema visual institucional
+   ---------------------------------------------------------------------
+   Arquivo exclusivamente visual. Não contém lógica, não altera dados,
+   rotas, autenticação, RLS ou integração com o Supabase.
+
+   Origem das cores: extraídas do site institucional www.fdv.br
+   (cabeçalho, links, paginação e variáveis globais do tema) em 27/10/2026.
+   Não foi localizado um manual de identidade visual público da FDV,
+   portanto a paleta é PROVISÓRIA e está toda centralizada abaixo:
+   para ajustar, altere apenas as variáveis da seção 1.
+
+   A fonte Open Sans é carregada em index.html.
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. TOKENS INSTITUCIONAIS (fonte única da verdade)
+   --------------------------------------------------------------------- */
+:root {
+  /* Azul institucional — medido em www.fdv.br */
+  --fdv-blue-900: #00294c;   /* cabeçalho do site · navegação lateral */
+  --fdv-blue-800: #0b3a66;   /* hover sobre o azul escuro */
+  --fdv-blue-700: #014c8a;   /* ação primária (paginação ativa do site) */
+  --fdv-blue-600: #00539d;   /* cor de destaque global do site · links */
+  --fdv-blue-100: #dce8f4;   /* fundos selecionados, realces */
+  --fdv-blue-50:  #eef4fa;   /* fundo de linha ativa / hover leve */
+
+  /* Neutros */
+  --fdv-white:    #ffffff;
+  --fdv-gray-50:  #f4f6f8;   /* fundo da aplicação */
+  --fdv-gray-100: #edf0f2;   /* cabeçalho de tabela, áreas secundárias */
+  --fdv-gray-200: #dde2e8;   /* bordas */
+  --fdv-gray-400: #a9b3be;   /* bordas de campo em foco desabilitado, ícones inativos */
+  --fdv-gray-600: #5b6470;   /* texto secundário (contraste 6:1 sobre branco) */
+  --fdv-gray-900: #1f2933;   /* texto principal */
+  --fdv-on-dark-muted: #a9bcd0; /* texto secundário sobre o azul escuro (7,6:1) */
+
+  /* Prioridades — todas com contraste ≥ 5,4:1 sobre branco (WCAG AA) */
+  --fdv-prio-critica: #b42318;  --fdv-prio-critica-bg: #fdecea;
+  --fdv-prio-alta:    #b54708;  --fdv-prio-alta-bg:    #fef1e6;
+  --fdv-prio-media:   #8a6100;  --fdv-prio-media-bg:   #fdf5dc;
+  --fdv-prio-baixa:   #2f6f4e;  --fdv-prio-baixa-bg:   #e8f3ec;
+
+  /* Status do chamado */
+  --fdv-status-aberto:       #00539d; --fdv-status-aberto-bg:       #eef4fa;
+  --fdv-status-andamento:    #6d4bb3; --fdv-status-andamento-bg:    #f1edf9;
+  --fdv-status-aguardando:   #8a6100; --fdv-status-aguardando-bg:   #fdf5dc;
+  --fdv-status-resolvido:    #2f6f4e; --fdv-status-resolvido-bg:    #e8f3ec;
+  --fdv-status-fechado:      #5b6470; --fdv-status-fechado-bg:      #edf0f2;
+
+  /* Categorias em destaque */
+  --fdv-cat-hardware:    #014c8a; --fdv-cat-hardware-bg: #eef4fa;
+  --fdv-cat-totvs:       #0b5e6b; --fdv-cat-totvs-bg:    #e6f2f3;
+
+  /* Retornos ao usuário */
+  --fdv-success: #2f6f4e;  --fdv-success-bg: #e8f3ec;
+  --fdv-warning: #8a6100;  --fdv-warning-bg: #fdf5dc;
+  --fdv-danger:  #b42318;  --fdv-danger-bg:  #fdecea;
+  --fdv-info:    #00539d;  --fdv-info-bg:    #eef4fa;
+
+  /* Tipografia — Open Sans é a fonte do site institucional */
+  --fdv-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fdv-text-xs: 0.75rem;
+  --fdv-text-sm: 0.875rem;
+  --fdv-text-md: 1rem;
+  --fdv-text-lg: 1.125rem;
+  --fdv-text-xl: 1.375rem;
+  --fdv-text-2xl: 1.75rem;
+
+  /* Espaçamento (escala de 4px) */
+  --fdv-space-1: 4px;  --fdv-space-2: 8px;   --fdv-space-3: 12px;
+  --fdv-space-4: 16px; --fdv-space-5: 20px;  --fdv-space-6: 24px;
+  --fdv-space-8: 32px; --fdv-space-10: 40px;
+
+  /* Bordas e sombras — discretas */
+  --fdv-radius-sm: 4px;
+  --fdv-radius: 6px;
+  --fdv-radius-lg: 8px;
+  --fdv-shadow-sm: 0 1px 2px rgba(0, 41, 76, 0.06);
+  --fdv-shadow-md: 0 4px 12px rgba(0, 41, 76, 0.10);
+  --fdv-focus-ring: 0 0 0 3px rgba(0, 83, 157, 0.30);
+
+  /* Layout */
+  --fdv-sidebar-width: 280px;
+  --fdv-header-height: 60px;
+}
+
+/* ---------------------------------------------------------------------
+   2. BASE
+   --------------------------------------------------------------------- */
+html, body {
+  font-family: var(--fdv-font);
+  color: var(--fdv-gray-900);
+  background: var(--fdv-gray-50);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--fdv-font); color: var(--fdv-blue-900); font-weight: 700; letter-spacing: -0.01em; }
+a { color: var(--fdv-blue-600); }
+:focus-visible { outline: none; box-shadow: var(--fdv-focus-ring); }
+
+/* ---------------------------------------------------------------------
+   3. CLASSES DE COMPONENTE (opcionais, prefixo .fdv-)
+   Use-as apenas no className dos componentes existentes. Nenhuma delas
+   altera comportamento — são só aparência.
+   --------------------------------------------------------------------- */
+
+/* 4.1 Marca ----------------------------------------------------------- */
+.fdv-brand { display: flex; align-items: center; gap: var(--fdv-space-3); text-decoration: none; }
+.fdv-brand__logo { height: 42px; width: auto; flex-shrink: 0; object-fit: contain; } /* proporção 100×111 preservada */
+.fdv-brand__name { display: flex; flex-direction: column; gap: 2px; line-height: 1.2; padding-left: var(--fdv-space-3); border-left: 1px solid rgba(255, 255, 255, 0.18); }
+.fdv-brand__title { color: #fff; font-size: 0.8125rem; font-weight: 700; }
+.fdv-brand__subtitle { color: var(--fdv-on-dark-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: .02em; }
+
+/* 4.2 Navegação lateral ---------------------------------------------- */
+.fdv-sidebar {
+  width: var(--fdv-sidebar-width);
+  background: var(--fdv-blue-900);
+  color: var(--fdv-blue-100);
+  display: flex; flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+.fdv-sidebar__header { padding: var(--fdv-space-5) var(--fdv-space-4); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.fdv-sidebar__section { padding: var(--fdv-space-4) var(--fdv-space-3) var(--fdv-space-1); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fdv-on-dark-muted); }
+.fdv-nav-item {
+  position: relative;
+  display: flex; align-items: center; gap: var(--fdv-space-3);
+  margin: 2px var(--fdv-space-2);
+  padding: 9px var(--fdv-space-3);
+  border-radius: var(--fdv-radius);
+  color: var(--fdv-blue-100);
+  font-size: var(--fdv-text-sm); font-weight: 500;
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease;
+}
+.fdv-nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: .85; }
+.fdv-nav-item:hover { background: var(--fdv-blue-800); color: #fff; }
+.fdv-nav-item.active, .fdv-nav-item[aria-current="page"] {
+  background: #fff; color: var(--fdv-blue-900); font-weight: 600;
+}
+.fdv-nav-item.active svg, .fdv-nav-item[aria-current="page"] svg { opacity: 1; color: var(--fdv-blue-700); }
+.fdv-nav-item__count { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; font-size: var(--fdv-text-xs); font-weight: 600; text-align: center; }
+.fdv-nav-item.active .fdv-nav-item__count { background: var(--fdv-blue-700); }
+.fdv-sidebar__footer { margin-top: auto; padding: var(--fdv-space-4); border-top: 1px solid rgba(255, 255, 255, 0.08); }
+
+/* 4.3 Cabeçalho superior --------------------------------------------- */
+.fdv-topbar {
+  height: var(--fdv-header-height);
+  display: flex; align-items: center; gap: var(--fdv-space-4);
+  padding: 0 var(--fdv-space-6);
+  background: #fff;
+  border-bottom: 1px solid var(--fdv-gray-200);
+}
+.fdv-topbar__title { font-size: var(--fdv-text-lg); font-weight: 700; color: var(--fdv-blue-900); margin: 0; }
+.fdv-topbar__actions { margin-left: auto; display: flex; align-items: center; gap: var(--fdv-space-2); }
+.fdv-icon-btn { position: relative; display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: var(--fdv-radius); color: var(--fdv-gray-600); background: transparent; border: 0; cursor: pointer; }
+.fdv-icon-btn:hover { background: var(--fdv-gray-100); color: var(--fdv-blue-900); }
+.fdv-icon-btn svg { width: 20px; height: 20px; display: block; }
+.fdv-icon-btn__dot { position: absolute; top: 1px; right: 0; min-width: 14px; height: 14px; padding: 0 3px; border-radius: 999px; background: var(--fdv-prio-critica); color: #fff; font-size: 9px; font-weight: 700; line-height: 14px; text-align: center; border: 2px solid #fff; box-sizing: content-box; }
+.fdv-user { display: flex; align-items: center; gap: var(--fdv-space-2); padding: 4px 8px 4px 4px; border-radius: var(--fdv-radius); }
+.fdv-user:hover { background: var(--fdv-gray-100); }
+.fdv-avatar { width: 34px; height: 34px; border-radius: 999px; display: grid; place-items: center; background: var(--fdv-blue-100); color: var(--fdv-blue-900); font-weight: 700; font-size: var(--fdv-text-xs); }
+.fdv-user__name { font-size: var(--fdv-text-sm); font-weight: 600; color: var(--fdv-gray-900); line-height: 1.2; }
+.fdv-user__role { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+
+/* 4.4 Superfícies ----------------------------------------------------- */
+.fdv-page { padding: var(--fdv-space-6); max-width: 1320px; }
+.fdv-page__header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--fdv-space-3); margin-bottom: var(--fdv-space-6); }
+.fdv-page__title { font-size: var(--fdv-text-2xl); margin: 0; }
+.fdv-page__lead { margin: var(--fdv-space-1) 0 0; color: var(--fdv-gray-600); font-size: var(--fdv-text-sm); }
+.fdv-card { background: #fff; border: 1px solid var(--fdv-gray-200); border-radius: var(--fdv-radius-lg); box-shadow: var(--fdv-shadow-sm); }
+.fdv-card__header { padding: var(--fdv-space-4) var(--fdv-space-5); border-bottom: 1px solid var(--fdv-gray-200); display: flex; align-items: center; justify-content: space-between; gap: var(--fdv-space-3); }
+.fdv-card__title { margin: 0; font-size: var(--fdv-text-md); font-weight: 700; color: var(--fdv-blue-900); }
+.fdv-card__body { padding: var(--fdv-space-5); }
+
+/* 4.5 Indicadores (dashboard da TI) ---------------------------------- */
+.fdv-kpi-grid { display: grid; gap: var(--fdv-space-4); grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.fdv-kpi { background: #fff; border: 1px solid var(--fdv-gray-200); border-radius: var(--fdv-radius-lg); padding: var(--fdv-space-4) var(--fdv-space-5); border-top: 3px solid var(--fdv-blue-700); }
+.fdv-kpi--critica { border-top-color: var(--fdv-prio-critica); }
+.fdv-kpi--alta    { border-top-color: var(--fdv-prio-alta); }
+.fdv-kpi--sucesso { border-top-color: var(--fdv-success); }
+.fdv-kpi__label { font-size: var(--fdv-text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--fdv-gray-600); }
+.fdv-kpi__value { font-size: 2rem; font-weight: 700; color: var(--fdv-blue-900); line-height: 1.1; margin-top: var(--fdv-space-2); font-variant-numeric: tabular-nums; }
+.fdv-kpi__hint { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); margin-top: var(--fdv-space-1); }
+
+/* 4.6 Botões ---------------------------------------------------------- */
+.fdv-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--fdv-space-2);
+  height: 40px; padding: 0 var(--fdv-space-4);
+  border-radius: var(--fdv-radius); border: 1px solid transparent;
+  font-family: var(--fdv-font); font-size: var(--fdv-text-sm); font-weight: 600;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.fdv-btn svg { width: 16px; height: 16px; }
+.fdv-btn--primary   { background: var(--fdv-blue-700); color: #fff; }
+.fdv-btn--primary:hover { background: var(--fdv-blue-900); }
+.fdv-btn--secondary { background: #fff; color: var(--fdv-blue-900); border-color: var(--fdv-gray-200); }
+.fdv-btn--secondary:hover { border-color: var(--fdv-blue-600); background: var(--fdv-blue-50); }
+.fdv-btn--ghost     { background: transparent; color: var(--fdv-blue-700); }
+.fdv-btn--ghost:hover { background: var(--fdv-blue-50); }
+.fdv-btn--danger    { background: var(--fdv-danger); color: #fff; }
+.fdv-btn--danger:hover { background: #8f1c13; }
+.fdv-btn--sm { height: 32px; padding: 0 var(--fdv-space-3); font-size: var(--fdv-text-xs); }
+.fdv-btn:disabled, .fdv-btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+
+/* 4.7 Formulários ----------------------------------------------------- */
+.fdv-form { display: grid; gap: var(--fdv-space-5); }
+.fdv-form__row { display: grid; gap: var(--fdv-space-4); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.fdv-field { display: flex; flex-direction: column; gap: 6px; }
+.fdv-label { font-size: var(--fdv-text-sm); font-weight: 600; color: var(--fdv-gray-900); }
+.fdv-label .req { color: var(--fdv-danger); margin-left: 2px; }
+.fdv-help { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+.fdv-input, .fdv-select, .fdv-textarea {
+  width: 100%; box-sizing: border-box;
+  font-family: var(--fdv-font); font-size: var(--fdv-text-sm); color: var(--fdv-gray-900);
+  background: #fff; border: 1px solid var(--fdv-gray-200); border-radius: var(--fdv-radius);
+  padding: 9px 12px; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.fdv-textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+.fdv-input:hover, .fdv-select:hover, .fdv-textarea:hover { border-color: var(--fdv-gray-400); }
+.fdv-input:focus, .fdv-select:focus, .fdv-textarea:focus { outline: none; border-color: var(--fdv-blue-600); box-shadow: var(--fdv-focus-ring); }
+.fdv-input[aria-invalid="true"], .fdv-select[aria-invalid="true"], .fdv-textarea[aria-invalid="true"] { border-color: var(--fdv-danger); }
+.fdv-error { font-size: var(--fdv-text-xs); color: var(--fdv-danger); font-weight: 600; }
+.fdv-form__actions { display: flex; justify-content: flex-end; gap: var(--fdv-space-2); padding-top: var(--fdv-space-4); border-top: 1px solid var(--fdv-gray-200); }
+
+/* Seletor de categoria em cartões (Hardware, TOTVS, …) */
+.fdv-category-grid { display: grid; gap: var(--fdv-space-3); grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+.fdv-category-option {
+  display: flex; align-items: center; gap: var(--fdv-space-3);
+  padding: var(--fdv-space-3) var(--fdv-space-4);
+  background: #fff; border: 1px solid var(--fdv-gray-200); border-radius: var(--fdv-radius-lg);
+  cursor: pointer; text-align: left; font: inherit; color: var(--fdv-gray-900);
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.fdv-category-option:hover { border-color: var(--fdv-blue-600); }
+.fdv-category-option[aria-checked="true"], .fdv-category-option[data-state="checked"], .fdv-category-option.selected {
+  border-color: var(--fdv-blue-700); background: var(--fdv-blue-50); box-shadow: inset 0 0 0 1px var(--fdv-blue-700);
+}
+.fdv-category-option__title { font-size: var(--fdv-text-sm); font-weight: 600; }
+.fdv-category-option__desc { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+
+/* 4.8 Ícone de categoria --------------------------------------------- */
+.fdv-cat-icon { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: var(--fdv-radius); flex-shrink: 0; background: var(--fdv-gray-100); color: var(--fdv-gray-600); }
+.fdv-cat-icon svg { width: 18px; height: 18px; }
+.fdv-cat-icon--sm { width: 26px; height: 26px; }
+.fdv-cat-icon--sm svg { width: 14px; height: 14px; }
+.fdv-cat-icon--hardware { background: var(--fdv-cat-hardware-bg); color: var(--fdv-cat-hardware); }
+.fdv-cat-icon--totvs    { background: var(--fdv-cat-totvs-bg);    color: var(--fdv-cat-totvs); }
+.fdv-category { display: inline-flex; align-items: center; gap: var(--fdv-space-2); font-size: var(--fdv-text-sm); font-weight: 500; }
+
+/* 4.9 Etiquetas: prioridade e status ---------------------------------- */
+.fdv-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 10px; border-radius: 999px;
+  font-size: var(--fdv-text-xs); font-weight: 600; line-height: 1.6; white-space: nowrap;
+  border: 1px solid transparent;
+}
+.fdv-badge::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.fdv-badge--critica { color: var(--fdv-prio-critica); background: var(--fdv-prio-critica-bg); border-color: color-mix(in srgb, var(--fdv-prio-critica) 25%, transparent); }
+.fdv-badge--alta    { color: var(--fdv-prio-alta);    background: var(--fdv-prio-alta-bg);    border-color: color-mix(in srgb, var(--fdv-prio-alta) 25%, transparent); }
+.fdv-badge--media   { color: var(--fdv-prio-media);   background: var(--fdv-prio-media-bg);   border-color: color-mix(in srgb, var(--fdv-prio-media) 25%, transparent); }
+.fdv-badge--baixa   { color: var(--fdv-prio-baixa);   background: var(--fdv-prio-baixa-bg);   border-color: color-mix(in srgb, var(--fdv-prio-baixa) 25%, transparent); }
+
+.fdv-status { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: var(--fdv-radius-sm); font-size: var(--fdv-text-xs); font-weight: 600; white-space: nowrap; }
+.fdv-status--aberto     { color: var(--fdv-status-aberto);     background: var(--fdv-status-aberto-bg); }
+.fdv-status--andamento  { color: var(--fdv-status-andamento);  background: var(--fdv-status-andamento-bg); }
+.fdv-status--aguardando { color: var(--fdv-status-aguardando); background: var(--fdv-status-aguardando-bg); }
+.fdv-status--resolvido  { color: var(--fdv-status-resolvido);  background: var(--fdv-status-resolvido-bg); }
+.fdv-status--fechado, .fdv-status--cancelado { color: var(--fdv-status-fechado); background: var(--fdv-status-fechado-bg); }
+
+/* 4.10 Tabelas -------------------------------------------------------- */
+.fdv-table-wrap { overflow-x: auto; border: 1px solid var(--fdv-gray-200); border-radius: var(--fdv-radius-lg); background: #fff; }
+.fdv-table { width: 100%; border-collapse: collapse; font-size: var(--fdv-text-sm); }
+.fdv-table th { background: var(--fdv-gray-100); color: var(--fdv-gray-600); font-size: var(--fdv-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--fdv-gray-200); white-space: nowrap; }
+.fdv-table td { padding: 12px 14px; border-bottom: 1px solid var(--fdv-gray-200); vertical-align: middle; }
+.fdv-table tbody tr:last-child td { border-bottom: 0; }
+.fdv-table tbody tr:hover { background: var(--fdv-blue-50); }
+.fdv-table .fdv-ticket-id { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-weight: 600; color: var(--fdv-blue-700); white-space: nowrap; }
+.fdv-table .fdv-muted { color: var(--fdv-gray-600); white-space: nowrap; }
+
+/* Cartão de chamado (lista em celular ou visão em cartões) */
+.fdv-ticket-card { display: grid; gap: var(--fdv-space-2); padding: var(--fdv-space-4); background: #fff; border: 1px solid var(--fdv-gray-200); border-left: 4px solid var(--fdv-gray-200); border-radius: var(--fdv-radius-lg); }
+.fdv-ticket-card[data-priority="critica"] { border-left-color: var(--fdv-prio-critica); }
+.fdv-ticket-card[data-priority="alta"]    { border-left-color: var(--fdv-prio-alta); }
+.fdv-ticket-card[data-priority="media"]   { border-left-color: var(--fdv-prio-media); }
+.fdv-ticket-card[data-priority="baixa"]   { border-left-color: var(--fdv-prio-baixa); }
+.fdv-ticket-card__top { display: flex; align-items: center; justify-content: space-between; gap: var(--fdv-space-2); }
+.fdv-ticket-card__title { font-size: var(--fdv-text-sm); font-weight: 600; color: var(--fdv-gray-900); margin: 0; }
+.fdv-ticket-card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fdv-space-2) var(--fdv-space-3); font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+
+/* 4.11 Filtros -------------------------------------------------------- */
+.fdv-filters { display: flex; flex-wrap: wrap; align-items: center; gap: var(--fdv-space-2); padding: var(--fdv-space-3) var(--fdv-space-4); border-bottom: 1px solid var(--fdv-gray-200); background: #fff; }
+.fdv-filters .fdv-input, .fdv-filters .fdv-select { width: auto; min-width: 150px; padding-top: 7px; padding-bottom: 7px; }
+
+/* 4.12 Alertas e notificações ---------------------------------------- */
+.fdv-alert { display: flex; gap: var(--fdv-space-3); padding: var(--fdv-space-3) var(--fdv-space-4); border-radius: var(--fdv-radius); border: 1px solid; border-left-width: 4px; font-size: var(--fdv-text-sm); }
+.fdv-alert--info    { color: var(--fdv-blue-900); background: var(--fdv-info-bg);    border-color: var(--fdv-blue-100); border-left-color: var(--fdv-info); }
+.fdv-alert--success { color: #1f4d36;           background: var(--fdv-success-bg); border-color: #cfe5d8; border-left-color: var(--fdv-success); }
+.fdv-alert--warning { color: #5c4100;           background: var(--fdv-warning-bg); border-color: #f2e2b0; border-left-color: var(--fdv-warning); }
+.fdv-alert--danger  { color: #7a1810;           background: var(--fdv-danger-bg);  border-color: #f6cfca; border-left-color: var(--fdv-danger); }
+
+.fdv-toast { min-width: 300px; max-width: 420px; background: #fff; border: 1px solid var(--fdv-gray-200); border-left: 4px solid var(--fdv-blue-700); border-radius: var(--fdv-radius); box-shadow: var(--fdv-shadow-md); padding: var(--fdv-space-3) var(--fdv-space-4); font-size: var(--fdv-text-sm); }
+.fdv-toast__title { font-weight: 700; color: var(--fdv-blue-900); }
+
+.fdv-notification { display: flex; gap: var(--fdv-space-3); padding: var(--fdv-space-3) var(--fdv-space-4); border-bottom: 1px solid var(--fdv-gray-200); font-size: var(--fdv-text-sm); }
+.fdv-notification.unread { background: var(--fdv-blue-50); box-shadow: inset 3px 0 0 var(--fdv-blue-700); }
+.fdv-notification__time { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+
+/* 4.13 Modais --------------------------------------------------------- */
+.fdv-modal-overlay { position: fixed; inset: 0; background: rgba(0, 25, 46, 0.55); display: grid; place-items: center; padding: var(--fdv-space-4); z-index: 50; }
+.fdv-modal { width: 100%; max-width: 560px; max-height: calc(100vh - 32px); overflow: auto; background: #fff; border-radius: var(--fdv-radius-lg); box-shadow: var(--fdv-shadow-md); }
+.fdv-modal__header { padding: var(--fdv-space-4) var(--fdv-space-5); border-bottom: 1px solid var(--fdv-gray-200); }
+.fdv-modal__title { margin: 0; font-size: var(--fdv-text-lg); }
+.fdv-modal__body { padding: var(--fdv-space-5); }
+.fdv-modal__footer { padding: var(--fdv-space-3) var(--fdv-space-5); border-top: 1px solid var(--fdv-gray-200); display: flex; justify-content: flex-end; gap: var(--fdv-space-2); background: var(--fdv-gray-50); }
+
+/* 4.14 Histórico do chamado ------------------------------------------ */
+.fdv-timeline { list-style: none; margin: 0; padding: 0; }
+.fdv-timeline li { position: relative; padding: 0 0 var(--fdv-space-4) var(--fdv-space-6); font-size: var(--fdv-text-sm); }
+.fdv-timeline li::before { content: ""; position: absolute; left: 5px; top: 6px; width: 9px; height: 9px; border-radius: 999px; background: #fff; border: 2px solid var(--fdv-blue-700); }
+.fdv-timeline li::after { content: ""; position: absolute; left: 10px; top: 18px; bottom: 0; width: 1px; background: var(--fdv-gray-200); }
+.fdv-timeline li:last-child::after { display: none; }
+.fdv-timeline__when { font-size: var(--fdv-text-xs); color: var(--fdv-gray-600); }
+
+/* ---------------------------------------------------------------------
+   4. RESPONSIVO — menu lateral vira gaveta abaixo de 1024px
+   (o botão/estado de abrir/fechar já existente no app controla .open)
+   --------------------------------------------------------------------- */
+.fdv-menu-toggle { display: none; }
+@media (max-width: 1023px) {
+  .fdv-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility .2s; }
+  .fdv-sidebar.open, .fdv-sidebar[data-state="open"] { transform: none; visibility: visible; box-shadow: var(--fdv-shadow-md); }
+  .fdv-menu-toggle { display: inline-grid; }
+  .fdv-topbar { padding: 0 var(--fdv-space-4); }
+  .fdv-page { padding: var(--fdv-space-4); }
+}
+@media (max-width: 640px) {
+  .fdv-user__name, .fdv-user__role { display: none; }
+  .fdv-page__title { font-size: var(--fdv-text-xl); }
+  .fdv-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--fdv-space-3); }
+  .fdv-kpi__value { font-size: 1.625rem; }
+  .fdv-filters .fdv-input, .fdv-filters .fdv-select { width: 100%; min-width: 0; }
+  .fdv-form__actions { flex-direction: column-reverse; }
+  .fdv-form__actions .fdv-btn { width: 100%; }
+  .fdv-modal-overlay { place-items: end center; padding: 0; }
+  .fdv-modal { border-radius: var(--fdv-radius-lg) var(--fdv-radius-lg) 0 0; max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
